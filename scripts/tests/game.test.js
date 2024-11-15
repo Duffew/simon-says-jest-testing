@@ -3,8 +3,8 @@
  */
 
 // define { game } as a constant from game.js
-
-const { game } = require("../game");
+// add new functions etc. as we go
+const { game, newGame, showScore } = require("../game");
 
 /** 
  * load index.html into jest's mock DOM before anything else runs.
@@ -40,5 +40,30 @@ describe("game object contains the correct keys", () => {
     // create a test to check that choices conatins the ids
     test("choices conatains the correct ids", () => {
         expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
+    });
+});
+
+// test the newGame function
+describe("newGame works correctly", () => {
+    beforeAll(() => {
+        game.score = 42;
+        // add new fake data
+        game.playerMoves = ["button1", "button2"];
+        game.currentGame = ["button1", "button2"];
+        document.getElementById("score").innerText = "42"
+        newGame();
+    });
+    test("should set game score to 0", () => {
+        expect(game.score).toEqual(0);
+    });
+    test("should clear the computer sequence array", () => {
+        // use .length to set the number of items in the array
+        expect(game.currentGame.length).toBe(0);
+    });
+    test("should clear the player moves array", () => {
+        expect(game.playerMoves.length).toBe(0);
+    });
+    test("should display 0 for the element with the id of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
     });
 });

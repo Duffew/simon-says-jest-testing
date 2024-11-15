@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Duffew/simon-says-jest-testing#readme",
   "devDependencies": {
+    "eslint-plugin-jest": "^28.9.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0"
   }
