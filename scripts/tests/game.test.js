@@ -4,7 +4,7 @@
 
 // define { game } as a constant from game.js
 // add new functions etc. as we go
-const { game, newGame, showScore } = require("../game");
+const { game, newGame, showScore, addTurn } = require("../game");
 
 /** 
  * load index.html into jest's mock DOM before anything else runs.
@@ -56,9 +56,13 @@ describe("newGame works correctly", () => {
     test("should set game score to 0", () => {
         expect(game.score).toEqual(0);
     });
-    test("should clear the computer sequence array", () => {
+    /* test("should clear the computer sequence array", () => {
         // use .length to set the number of items in the array
         expect(game.currentGame.length).toBe(0);
+    });
+    */
+    test("should be one move in the computer's game array", () => {
+        expect(game.currentGame.length).toBe(1);
     });
     test("should clear the player moves array", () => {
         expect(game.playerMoves.length).toBe(0);

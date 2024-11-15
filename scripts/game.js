@@ -12,6 +12,14 @@ function newGame() {
     // use .length to be explicit and [0] or
     game.playerMoves = [];
     showScore();
+    addTurn();
+}
+
+// define addTurn()
+function addTurn() {
+    game.playerMoves = [];
+    game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
+    // showTurns;
 }
 
 // define showScore() to manage game score and call the function above in newGame()
@@ -20,4 +28,4 @@ function showScore() {
 }
 
 // export the code to test file as { game }
-module.exports = { game, newGame, showScore };
+module.exports = { game, newGame, showScore, addTurn };
