@@ -3,6 +3,7 @@
  */
 
 // define { game } as a constant from game.js
+
 const { game } = require("../game");
 
 /** 
@@ -35,5 +36,9 @@ describe("game object contains the correct keys", () => {
     // next create a failing test to check if the choices key exists
     test("choices key exists", () => {
         expect("choices" in game).toBe(true);
+    });
+    // create a test to check that choices conatins the ids
+    test("choices conatains the correct ids", () => {
+        expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
     });
 });
