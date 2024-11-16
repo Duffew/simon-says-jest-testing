@@ -92,6 +92,9 @@ describe("gameplay works correctly", () => {
         game.currentGame = [];
         game.playerMoves = [];
         addTurn();
+        document.body.innerHTML = `<div>
+            <p id="score"></p>
+        </div>`;
     });
     afterEach(() => {
         game.score = 0;
@@ -106,6 +109,10 @@ describe("gameplay works correctly", () => {
         let button = document.getElementById(game.currentGame[0]);
         lightsOn(game.currentGame[0]);
         expect(button.classList).toContain("light");
+    });
+    test("should toggle turnInProgress to true", () => {
+        showTurns();
+        expect(game.turnInProgress).toBe(true);
     });
     test("showTurns should update game.turnNumber", () => {
         game.turnNumber = 42;
@@ -122,5 +129,11 @@ describe("gameplay works correctly", () => {
         playerTurn();
         // we expect the alert box to be called with a text box that diaplays "Wrong Move!"
         expect(window.alert).toBeCalledWith("Wrong move!");
-    })
+    });
+    test("clicking during computer sequence should fail", () => {
+        showTurns();
+        game.lastButton = "";
+        document.getElementById("button2").click();
+        expect(game.lastButton).toEqual("");
+    });
 });

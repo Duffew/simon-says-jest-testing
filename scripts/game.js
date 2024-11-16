@@ -15,10 +15,13 @@ function newGame() {
     for (let circle of document.getElementsByClassName("circle")) {
         if (circle.getAttribute("data-listener") !== "true") {
             circle.addEventListener("click", (e) => {
-                let move = e.target.getAttribute("id");
-                lightsOn(move);
-                game.playerMoves.push(move);
-                playerTurn();
+                if (game.currentGame.length > 0 && !game.turnInProgress) {
+                    let move = e.target.getAttribute("id");
+                    game.lastButton = move;
+                    game.playerMoves.push(move);
+                    lightsOn(move);
+                    playerTurn();
+                }
             });
             circle.setAttribute("data-listener", "true");
         }
@@ -27,6 +30,9 @@ function newGame() {
     addTurn();
 }
 
+showScore();
+addTurn();
+
 // define addTurn()
 function addTurn() {
     game.playerMoves = [];
@@ -34,10 +40,6 @@ function addTurn() {
     showTurns();
 }
 
-// define showScore() to manage game score and call the function above in newGame()
-function showScore() {
-    document.getElementById("score").innerText = game.score;
-}
 // create a function to flash the game light
 function lightsOn(circ) {
     document.getElementById(circ).classList.add("light");
@@ -48,12 +50,14 @@ function lightsOn(circ) {
 
 // write a function to show the random sequence that the player needs to remember
 function showTurns() {
+    game.turnInProgress = true;
     game.turnNumber = 0;
-    let turns = setInterval(function() {
+    let turns = setInterval(function () {
         lightsOn(game.currentGame[game.turnNumber]);
         game.turnNumber++;
         if (game.turnNumber >= game.currentGame.length) {
             clearInterval(turns);
+            game.turnInProgress = false;
         }
     }, 800);
 }
@@ -70,6 +74,11 @@ function playerTurn() {
         alert("Wrong move!");
         newGame();
     }
+}
+
+// define showScore() to manage game score and call the function above in newGame()
+function showScore() {
+    document.getElementById("score").innerText = game.score;
 }
 
 // export the code to test file as { game }
