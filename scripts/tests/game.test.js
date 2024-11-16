@@ -4,6 +4,7 @@
 
 // define { game } as a constant from game.js
 // add new functions etc. as we go
+const { emitKeypressEvents } = require("readline");
 const { game, newGame, showScore, addTurn, lightsOn, showTurns } = require("../game");
 
 /** 
@@ -72,6 +73,12 @@ describe("newGame works correctly", () => {
     });
     test("should display 0 for the element with the id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
+    });
+    test("expect data-listener to be true", () => {
+        const elements = document.getElementsByClassName("circle");
+        for (let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
     });
 });
 
