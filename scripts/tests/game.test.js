@@ -4,8 +4,11 @@
 
 // define { game } as a constant from game.js
 // add new functions etc. as we go
-const { emitKeypressEvents } = require("readline");
-const { game, newGame, showScore, addTurn, lightsOn, showTurns } = require("../game");
+
+const { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn } = require("../game");
+
+// add a spy to watch for an alert to appear then send it to an empty function
+jest.spyOn(window, "alert").mockImplementation(() => {});
 
 /** 
  * load index.html into jest's mock DOM before anything else runs.
@@ -74,6 +77,7 @@ describe("newGame works correctly", () => {
     test("should display 0 for the element with the id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
     });
+    // workaround for testing an event listener in the DOM
     test("expect data-listener to be true", () => {
         const elements = document.getElementsByClassName("circle");
         for (let element of elements) {
@@ -108,4 +112,15 @@ describe("gameplay works correctly", () => {
         showTurns(0);
         expect(game.turnNumber).toBe(0);
     });
+    test("should increment the score if the turn is correct", () => {
+        game.playerMoves.push(game.currentGame[0]);
+        playerTurn();
+        expect(game.score).toBe(1);
+    });
+    test("should call an alert if the move is wrong", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        // we expect the alert box to be called with a text box that diaplays "Wrong Move!"
+        expect(window.alert).toBeCalledWith("Wrong move!");
+    })
 });
