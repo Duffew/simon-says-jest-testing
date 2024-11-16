@@ -2,6 +2,7 @@ let game = {
     score: 0,
     currentGame: [],
     playerMoves: [],
+    turnNumber: 0,
     choices: ["button1", "button2", "button3", "button4"],
 }
 
@@ -19,7 +20,7 @@ function newGame() {
 function addTurn() {
     game.playerMoves = [];
     game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
-    // showTurns;
+    showTurns();
 }
 
 // define showScore() to manage game score and call the function above in newGame()
@@ -34,5 +35,17 @@ function lightsOn(circ) {
     }, 400);
 }
 
+// write a function to show the random sequence that the player needs to remember
+function showTurns() {
+    game.turnNumber = 0;
+    let turns = setInterval(function() {
+        lightsOn(game.currentGame[game.turnNumber]);
+        game.turnNumber++;
+        if (game.turnNumber >= game.currentGame.length) {
+            clearInterval(turns);
+        }
+    }, 800);
+}
+
 // export the code to test file as { game }
-module.exports = { game, newGame, showScore, addTurn, lightsOn };
+module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns };
