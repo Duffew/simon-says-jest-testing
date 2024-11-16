@@ -26,6 +26,13 @@ function addTurn() {
 function showScore() {
     document.getElementById("score").innerText = game.score;
 }
+// create a function to flash the game light
+function lightsOn(circ) {
+    document.getElementById(circ).classList.add("light");
+    setTimeout(() => {
+        document.getElementById(circ).classList.remove("light");
+    }, 400);
+}
 
 // export the code to test file as { game }
-module.exports = { game, newGame, showScore, addTurn };
+module.exports = { game, newGame, showScore, addTurn, lightsOn };
